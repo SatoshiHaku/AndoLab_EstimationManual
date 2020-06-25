@@ -1,0 +1,185 @@
+\documentclass[11pt]{jbook}
+%\documentclass{jaeticle}
+\bibliographystyle{unsrt}
+
+
+\begin{document}
+\chapter{ST-FMR測定における各物理量の計算式のまとめ}
+\section{A single sample}
+
+damping-like torqueとfield-like torqueの有効磁場を$H_{L} \propto \xi_{\mathrm{DL}} J_{e}(\hat{\sigma} \times \hat{m})$と$H_{T} \propto\xi_{\mathrm{FL}} J_{e} \hat{\sigma}$のように定義すると
+\begin{eqnarray}
+\xi_{\mathrm{DL}(\mathrm{FL})}(T)=\left(\frac{2 e}{\hbar}\right) 4 \pi M_{s}(T) t_{\mathrm{FM}}^{\mathrm{eff}}\left(\frac{H_{L(T)}}{J_{e}}\right)
+\end{eqnarray}
+これらの有効磁場は，面内に磁場を印加して，電流を$x$軸に流しているとすると~\cite{PhysRevB.92.214406}
+\begin{eqnarray}
+V_{\mathrm{sym}}=\frac{I \Delta R}{2} A_{\mathrm{sym}} H_\mathrm{L}\cos\theta \sin 2 \theta \\
+V_{\mathrm{asy}}=\frac{I \Delta R}{2} A_{\mathrm{asy}}\left(H_{y} \cos \theta-H_{x} \sin \theta\right) \sin 2 \theta
+\end{eqnarray}
+普通は$H_x$(電流に並行な方向にスピン偏極した角運動量が磁化に受け渡されるってこと)はないので，$H_y = H_\mathrm{T}$となる．このとき
+\begin{eqnarray}
+A_{\mathrm{sym}}=\frac{\gamma\left(H_{\mathrm{res}}+H_{1}\right)\left(H_{\mathrm{res}}+H_{2}\right)}{\omega \Delta H\left(2 H_{\mathrm{res}}+H_{1}+H_{2}\right)} \\
+A_{\mathrm{asy}}=\frac{\left(H_{\mathrm{res}}+H_{1}\right)}{\mu_{0} \Delta H\left(2 H_{\mathrm{res}}+H_{1}+H_{2}\right)}
+\end{eqnarray}
+である．
+磁気的な自由エネルギー$F$を
+\begin{eqnarray}
+F[\theta, \phi]=&\nonumber F_{\mathrm{Zeeman}}[\theta, \phi]+F_{\mathrm{surf}}[\theta, \phi]+F_{\mathrm{shape}}[\theta, \phi] \\
+&+F_{U}[\theta, \phi]+F_{\mathrm{exch}}[\theta, \phi] \\\nonumber
+=& \mu_{0}\left(H+H_{\mathrm{rot}}\right) M d_{F}\left(\sin \phi \sin \phi_{H} \cos \left(\theta-\theta_{H}\right)\right.\\\nonumber
+&\left.+\cos \phi \cos \phi_{H}\right)+\left(\mu_{0} M^{2} d_{F} / 2-K_{S}\right) \cos ^{2} \phi \\\nonumber
+&-K_{U} d_{F} \sin ^{2} \phi \cos ^{2}\left(\theta-\theta_{\mathrm{uni}}\right) \\
+&-\mu_{0} M d_{F} H_{\mathrm{ex}} \cos \left(\theta-\theta_{\mathrm{exch}}\right) \sin \phi
+\end{eqnarray}
+としたとき，共鳴条件
+\begin{eqnarray}
+\left(\frac{\omega}{\gamma}\right)^{2}=\frac{1}{M^{2} d_{F}^{2} \sin ^{2} \theta}\left[\left(\frac{\partial^{2} F}{\partial \theta^{2}}\right)\left(\frac{\partial^{2} F}{\partial \phi^{2}}\right)-\left(\frac{\partial^{2} F}{\partial \phi \partial \theta}\right)^{2}\right]
+\end{eqnarray}
+を考えると，
+\begin{eqnarray}
+\left(\frac{\omega}{\gamma}\right)^{2}=\mu_{0}^{2}\left(H+H_{1}\right)\left(H+H_{2}\right)
+\end{eqnarray}
+となる．ただし
+\begin{eqnarray}
+H_{1}&=&H_{\mathrm{rot}}+M_{\mathrm{eff}}+H_{\mathrm{exch}} \cos \left(\theta-\theta_{\mathrm{exch}}\right)+H_{U} \cos ^{2}\left(\theta-\theta_{U}\right) \\
+H_{2}&=&H_{\mathrm{rot}}+H_{\mathrm{exch}} \cos \left(\theta-\theta_{\mathrm{exch}}\right)+H_{U} \cos \left[2\left(\theta-\theta_{U}\right)\right]
+\end{eqnarray}
+である．さらに，$H_1$が$H_\mathrm{res}$に対して小さい場合，$H_\mathrm{res}+H_1 \approx M_\mathrm{eff}$とできて，共鳴条件は
+\begin{eqnarray}
+\mu_{0} H_{\mathrm{res}}=&\nonumber \left(\frac{\omega}{\gamma}\right)^{2} \frac{1}{\mu_{0} M_{\mathrm{eff}}}-\mu_{0} H_{\mathrm{rot}}-\mu_{0} H_{\mathrm{exch}} \cos \left(\theta-\theta_{\mathrm{exch}}\right) \\
+&-\mu_{0} H_{U} \cos \left[2\left(\theta-\theta_{U}\right)\right]
+\end{eqnarray}
+と書ける．ただ，通常反強磁性体を使用していない限りexchange bias $H_{\mathrm{exch}}$はなく（元論文は反強磁性体IrMnを使用しているため~\cite{PhysRevB.92.214406}）,一軸異方性$H_{U}$もなく，回転磁気異方性$H_\mathrm{rot}$（元論文では多結晶IrMnのグレインがPyと結合することによって生じている~\cite{PhysRevB.92.214406}）もないので，結局Py/Ptなどの試料では$H_1=M_\mathrm{eff}$で，$H_2=0$となる．
+
+
+結局，$A_{\mathrm{sym}}$と$A_{\mathrm{asy}}$は
+\begin{eqnarray}
+A_{\mathrm{sym}}=\frac{\gamma\left(H_{\mathrm{res}}+M_\mathrm{eff}\right)H_{\mathrm{res}}}{\omega \Delta H\left(2 H_{\mathrm{res}}+M_\mathrm{eff}\right)} \\
+A_{\mathrm{asy}}=\frac{\left(H_{\mathrm{res}}+M_\mathrm{eff}\right)}{\mu_{0} \Delta H\left(2 H_{\mathrm{res}}+M_\mathrm{eff}\right)}
+\end{eqnarray}
+と簡単になり，これを使えばいい．．
+
+
+
+
+\section{Multipul samples}
+
+ST-FMR測定のSA比から分かる$\xi_\mathrm{FMR}$は
+\begin{equation}
+\xi_{\mathrm{FMR}}=\frac{S}{A}\left(\frac{e}{\hbar}\right) 4 \pi M_{s} t_{\mathrm{FM}}^{\mathrm{eff}} d_{\mathrm{NM}} \sqrt{1+\left(4 \pi M_{\mathrm{eff}} / H_{0}\right)}
+\end{equation}
+のようになり，このS,Aをあらわに書くと
+\begin{equation}
+S=\frac{\hbar}{2 e} \frac{\xi_{\mathrm{DL}} J_{e}^{\mathrm{rf}}}{4 \pi M_{s} t_{\mathrm{FM}}^{\mathrm{eff}}}
+\end{equation}
+\begin{eqnarray}
+A &=&\nonumber \left(H_{T}+H_{\mathrm{Oe}}\right) \sqrt{1+\left(4 \pi M_{\mathrm{eff}} / H_{0}\right)} \\
+&=&\left(\frac{\hbar}{2 e} \frac{\xi_{\mathrm{FL}} J_{e}^{\mathrm{rf}}}{4 \pi M_{s} t_{\mathrm{FM}}^{\mathrm{eff}}}+\frac{J_{e}^{\mathrm{rf}} d_{\mathrm{NM}}}{2}\right) \sqrt{1+\left(4 \pi M_{\mathrm{eff}} / H_{0}\right)}
+\end{eqnarray}
+となるので，ここから強磁性体の依存性は
+\begin{equation}
+\frac{1}{\xi_{\mathrm{FMR}}}=\frac{1}{\xi_{\mathrm{DL}}}\left(1+\frac{\hbar}{e} \frac{\xi_{\mathrm{FL}}}{4 \pi M_{s} t_{\mathrm{FM}}^{\mathrm{eff}} d_{\mathrm{NM}}}\right)
+\end{equation}
+となる~\cite{PhysRevB.92.064426}．
+また，常磁性体の抵抗率$\rho_\mathrm{NM}$が分かっていれば
+\begin{equation}
+\frac{1}{\xi_{\mathrm{FMR}}}=\frac{1}{\xi_{\mathrm{DL}}^{E}}\left(\frac{1}{\rho_{\mathrm{NM}}}+\frac{\hbar}{e} \frac{\xi_{\mathrm{FL}}^{E}}{4 \pi M_{\mathrm{s}} t_{\mathrm{FM}} t_{\mathrm{NM}}}\right)
+\end{equation}
+
+と書き換えられる．$\xi_{\mathrm{DL,FL}}^{E}$は試料に印加された電場あたりのSOT変換効率と考えられ，単位がspin-Hall conductivityと同じになる．さらに，spin-Hall angleと$\xi_\mathrm{DL}$の関係が$G_{\mathrm{NM}} \equiv \sigma_{\mathrm{NM}} / \lambda_{\mathrm{s}, \mathrm{NM}}$であることを考えて，
+
+\begin{eqnarray}
+\xi_{\mathrm{DL}} &=\nonumber \theta_{\mathrm{SH}}\left(2 G^{\uparrow \downarrow} / G_{\mathrm{NM}}\right) /\left(1+2 G^{\uparrow \downarrow} / G_{\mathrm{NM}}\right) \\
+&=\theta_{\mathrm{SH}}\left(2 G_{\mathrm{eff}}^{\uparrow \downarrow} / G_{\mathrm{NM}}\right) \equiv \theta_{\mathrm{SH}} T_{\mathrm{int}}
+\end{eqnarray}
+とかけることから，
+\begin{eqnarray}
+\xi_\mathrm{DL}^E = T_\mathrm{int}\sigma_\mathrm{SH}	
+\end{eqnarray}
+と表せる．この$T_\mathrm{int}$は，下で述べるようにspin-mixing conductanceが分かると定量できる．\\
+
+
+
+さらにお得なことに，強磁性体膜厚依存性は磁化やダンピングの詳細な定量の可能性も与える．spin pumpingの理論からFMの隣にあるNMなどのspin sinkになり得る層が存在するときダンピングはFM単層の時より増大する．これは界面におけるspinの受け渡されやすさ(effective spin-mixing conductance $g_{\mathrm{eff}}^{\uparrow \downarrow}$)として表現できて，
+
+\begin{equation}
+g_{\mathrm{eff}}^{\uparrow \downarrow}=\frac{4 \pi M_{s} t_{\mathrm{FM}}^{\mathrm{eff}}}{\gamma \hbar}\left(\alpha-\alpha_{0}\right)=\frac{4 \pi M_{s} t_{\mathrm{FM}}^{\mathrm{eff}}}{\gamma \hbar} \Delta \alpha
+\end{equation}
+と定量できる．結局実際はST-FMR信号の線幅の周波数依存性から求めた$\alpha$の強磁性体膜厚依存性によって
+\begin{equation}
+\alpha = \frac{\gamma \hbar g_{\mathrm{eff}}^{\uparrow \downarrow}}{4 \pi M_{s} }\frac{1}{t_{\mathrm{FM}}^{\mathrm{eff}}}+ \alpha_0
+\end{equation}
+この傾きから計算できる．この$\alpha_0$はFMのintrinsicなダンピングである．
+さらに，effective spin-mixing conductance $G_{\mathrm{eff}}^{\uparrow \downarrow}$は
+\begin{equation}
+G_{\mathrm{eff}}^{\uparrow \downarrow}= \frac{e^2}{h}g_{\mathrm{eff}}^{\uparrow \downarrow}
+\end{equation}
+となる．（実際はGの方が先に定義されて，ダンピングから出てくるgが後から定義される．）参考までに，これはPt/CoFeとかだと，$g$は$10^{19}$ m$^{-2}$弱，$G$は$10^{15}$ $\Omega^{-1}$m$^{-2}$弱くらいの大きさ．
+さらに，NMの拡散長$\lambda_\mathrm{NM}$がわかれば，
+\begin{eqnarray}
+G^{\uparrow \downarrow}=\frac{\frac{\sigma_{\mathrm{P}_{\uparrow}}}{2 \lambda_{\mathrm{S}, \mathrm{NM}}}\left(\frac{e^{2}}{h}\right) g_{\mathrm{eff}}^{\uparrow \downarrow}}{\frac{\sigma_{\mathrm{NM}}}{2 \lambda_{\mathrm{s}, \mathrm{NM}}}-\left(\frac{e^{2}}{h}\right) g_{\mathrm{eff}}^{\uparrow \downarrow} \mathrm{coth}\left(\frac{d_{\mathrm{NM}}}{\lambda_{\mathrm{s}, \mathrm{NM}}}\right)}=\frac{G_{\mathrm{eff}}^{\uparrow \downarrow}}{1-2 G_{\mathrm{eff}}^{\uparrow \downarrow} / G_{\mathrm{NM}}}
+\end{eqnarray}
+
+という関係から，spin back flowの存在も考慮したbareなspin-mixing conductance $G^{\uparrow \downarrow}$を求めることができる．
+
+
+また，この$G^{\uparrow \downarrow}$が分かると，spin transparency $T_\mathrm{int}$を
+\begin{equation}
+T_{\mathrm{int}}=\frac{G^{\uparrow \downarrow} \tanh \left(\frac{d_{\mathrm{NM}}}{2 \lambda_{NM}}\right)}{G^{\uparrow \downarrow} \mathrm{coth}\left(\frac{d_{\mathrm{NM}}}{\lambda_{\mathrm{NM}}}\right)+\frac{G_{\mathrm{NM}}}{2}}
+\end{equation}
+のように求めることができる~\cite{Zhang10.1038.nphys3304}．これはもちろん0以上1以下である．以上の中ではSMLを考慮していない．
+SMLの簡単な考慮の仕方はeffective spin-mixing conductanceに取り込み
+\begin{eqnarray}
+g_{\mathrm{eff}}^{\uparrow \downarrow} &=G^{\uparrow \downarrow}\left[1-(1-\delta)^{2} \varepsilon\right]
+\end{eqnarray}
+と書き換える方法である~\cite{Taoeaat1670}．ただし
+\begin{eqnarray}
+\varepsilon &=G^{\uparrow \downarrow} /\left[G^{\uparrow \downarrow}+\frac{2}{3} k_{\mathrm{F}}^{2} \frac{l_{\mathrm{mf}}}{\lambda_{\mathrm{NM}}} \tanh \left(\frac{t_{\mathrm{N}}}{\lambda_{\mathrm{NM}}}\right)\right]
+\end{eqnarray}
+
+である．$\epsilon$がspin back flowを表現していて，$\delta$がSMLを表していて0がSMLがなく，1が完全に界面でlossするということを考えている．$k_{\mathrm{F}}$や$l_{\mathrm{mf}}$はHall測定で求める．それは次の章でまとめる.\\
+
+
+
+
+また，飽和磁化と界面の磁気異方性も求められて，ST-FMR信号の共鳴磁場の周波数依存性からKittelの式によって有効的な飽和磁化$\mu_{0} M_{\mathrm{eff}}$を得られるが，それの強磁性体膜厚依存性により
+\begin{equation}
+\mu_{0} M_{\mathrm{eff}}=\mu_{0} M_{\mathrm{s}}-\frac{2 K_{\mathrm{s}}}{M_{\mathrm{s}} t_{\mathrm{FM}}^{\mathrm{eff}}}
+\end{equation}
+という関係を使える．$K_\mathrm{s}$は界面の垂直磁気異方性エネルギーでPt/Coだと$1$ mJ/m$^2$程度である．
+
+\chapter{Hall effectによる物理量の定量}
+膜厚$d$の試料に磁束密度$B$，電流$I$を流したときに測定したHall電圧$V_\mathrm{H}$は
+\begin{eqnarray}
+	V_\mathrm{H} = \frac{R_\mathrm{H}I}{d}B
+\end{eqnarray}
+とかける．この比例係数$R_\mathrm{H}$をHall定数と呼び，キャリアの電荷$q$(電子ならマイナス，正孔ならプラス)と電子密度$n$で
+\begin{eqnarray}
+	R_\mathrm{H} = \frac{1}{qn}
+\end{eqnarray}
+とかけるから，Hall効果を測れば電荷密度を見積もれる．
+さらに伝導率$\sigma$が分かっていれば，緩和時間$\tau$は
+\begin{eqnarray}
+	\tau = \frac{\sigma m }{q^2 n}
+\end{eqnarray}
+と計算できる．ここで$m = 9.11\times10^{-31}$ kgである．
+フェルミ面付近の電子が伝導を担っていると考えられる系だと，フェルミ速度$v_\mathrm{F}$を計算できる．これはフェルミ波数$k_\mathrm{F}$を用いて
+\begin{eqnarray}
+	v_\mathrm{F} = \frac{\hbar k_\mathrm{F}}{m}
+\end{eqnarray}
+となる．ただし，$k_\mathrm{F} = (3\pi^2 n )^{1/3}$と計算する．これらから平均自由行程$l_\mathrm{mf}$も定量できて，
+\begin{eqnarray}
+	l_\mathrm{mf} = v_\mathrm{F}\times2\tau
+\end{eqnarray}
+となる．
+\bibliography{ref.bib}
+
+\end{document}
+
+PHYSICAL REVIEW B 92, 064426 (2015)
+
+PHYSICAL REVIEW B 92, 214406 (2015)
+
+Role of transparency of platinum–ferromagnet interfaces in determining the intrinsic magnitude of the spin Hall e￿ect
+
+Self-consistent determination of spin Hall angle and spin diffusion length in Pt and Pd: The role of the interface spin loss
