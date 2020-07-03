@@ -4,3 +4,6 @@
 *.fdb_latexmk
 *.log
 *.toc
+
+# Mac OS
+*.DS_Store
