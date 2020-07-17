@@ -71,7 +71,7 @@ class XiFLDLFitting(Command):
                      marker='.', linewidth=0, label=range_type)
 
             def fitfunc_xifmr(d_inv, xi_DL, xi_FL):
-                return (1 + sconst.hbar * xi_FL / (sconst.elementary_charge * M_s)) * d_inv / xi_DL
+                return (1 + sconst.hbar * xi_FL / (sconst.elementary_charge * M_s) * d_inv) / xi_DL
 
             para, _ = sopt.curve_fit(
                 fitfunc_xifmr, d_arr, xi_FMR_inv[range_type], para_ini)
