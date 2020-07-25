@@ -146,4 +146,5 @@ class CurveFittingCore():
 
 if __name__ == "__main__":
     curve_fitting = CurveFittingCore()
-    curve_fitting.run(sys.argv[1])
+    curve_fitting.fitting(sys.argv[1])
+    curve_fitting.plot(sys.argv[1])
