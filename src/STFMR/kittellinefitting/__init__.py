@@ -1,1 +1,1 @@
-from .core import KittelLineFitting
+from .command import KittelLineFitting

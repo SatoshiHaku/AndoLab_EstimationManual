@@ -1,1 +1,1 @@
-from .core import XiFLDLFitting
+from .command import XiFLDLFitting

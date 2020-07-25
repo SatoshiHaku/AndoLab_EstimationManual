@@ -1,3 +1,4 @@
+
 import scipy.optimize as sopt
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,12 +7,10 @@ import pandas as pd
 import sys
 import glob
 import re
+import json
+import os
 
-from setting import *
-from rootcommand import CommonOption, RootCommand
-from uroboros import Command
-from uroboros.constants import ExitStatus
-
+# 正側と負側のフィッティング範囲
 fitting_range = {
     "positive": list(range(610, 1190)),
     "negative": list(range(10, 590))
@@ -43,17 +42,8 @@ def fitfunc_curve(h, hr, s, a, w, c, d):
     return s * w * w / ((h - hr) * (h - hr) + w * w) + a * w * (h - hr) / ((h - hr)*(h - hr) + w*w) + c*h + d
 
 
-class CurveFitting(Command):
-    """Sub command of root"""
-    name = 'curve'
-    options = [CommonOption()]
-
-    short_description = 'ST-FMR fitting for a single sample'
-    long_description = 'Analyze experimental data using ST-FMR method for a single sample'
+class CurveFittingCore():
     file_list = []
-
-    # 正側と負側のフィッティング範囲
-
     range_type = []
     frequency = []
     h_res = []
@@ -64,11 +54,17 @@ class CurveFitting(Command):
     bias = []
     columns = ["range_type", "frequency", "h_res", "sym",
                "asym", "linewidth", "slope", "bias"]
+    curve_fitting_file = ""
+
+    def __init__(self):
+        base = os.path.dirname(os.path.abspath(__file__))
+        name = os.path.normpath(os.path.join(
+            base, '../setting/settings.json'))
+        self.curve_fitting_file = pd.read_json(
+            name).at["curve_fitting_file", "file_name"]
 
     def file_parser(self, foldername):
         filename = glob.glob(foldername + '/*lvm')  # lvmファイルがあるフォルダー内のファイル名を取得
-        if filename == []:
-            return ExitStatus.MISS_USAGE
 
         for i, filename in enumerate(filename):
             # ファイル名から周波数部分だけ抽出
@@ -99,8 +95,8 @@ class CurveFitting(Command):
             self.bias += [para[5]]
         return 0
 
-    def run(self, args):
-        foldername = str(args.dir)
+    def fitting(self, dir):
+        foldername = str(dir)
         self.file_parser(foldername)
         print('Target files:')
         for fre, filename in self.file_list:
@@ -119,21 +115,12 @@ class CurveFitting(Command):
             columns=self.columns
         )
         print(df)
-        df.to_csv(foldername + "/" + curve_fitting_file, index=False)
-        return ExitStatus.SUCCESS
+        df.to_csv(foldername + "/" + self.curve_fitting_file, index=False)
+        return 0
 
-
-class CurvePlotting(Command):
-    """Sub command of stfmr"""
-    name = 'curveplot'
-    options = [CommonOption()]
-
-    short_description = 'ST-FMR Plotting for a single sample'
-    long_description = 'Generate plottings of experimental data and fitting ones.'
-
-    def run(self, args):
-        df = pd.read_csv(str(args.dir) + "/" +
-                         curve_fitting_file)
+    def plot(self, dir):
+        df = pd.read_csv(str(dir) + "/" +
+                         self.curve_fitting_file)
         df = df.set_index(["range_type"], drop=True)
         reprod_range = {
             "positive": np.arange(0, 250, 0.5),
@@ -153,6 +140,10 @@ class CurvePlotting(Command):
         plt.title("Curve fitting" + " (" + range_type + ") ")
         plt.xlabel('magnetic field (mT)', fontsize=Fontsize)
         plt.ylabel('voltage (V)', fontsize=Fontsize)
-        plt.savefig(str(args.dir) +
+        plt.savefig(str(dir) +
                     "/fitting_result.png")
-        return ExitStatus.SUCCESS
+
+
+if __name__ == "__main__":
+    curve_fitting = CurveFittingCore()
+    curve_fitting.run(sys.argv[1])

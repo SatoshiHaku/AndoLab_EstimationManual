@@ -2,13 +2,11 @@ import pandas as pd
 import numpy as np
 import scipy.optimize as sopt
 import scipy.constants as sconst
-import os
-from pathlib import Path
 
-from setting import *
-from rootcommand import CommonOption, RootCommand
-from uroboros import Command
-from uroboros.constants import ExitStatus
+import os
+import sys
+
+from pathlib import Path
 
 gamma = sconst.physical_constants["electron gyromag. ratio"][0]
 gamma_GHZ = float(
@@ -35,32 +33,22 @@ def fitfunc_line(x, a, b):
     return a * x + b
 
 
-class KittelLineFitting(Command):
-    """Sub command of stfmr"""
-    name = 'kittelline'
-    options = [CommonOption()]
+class KittelLineFittingCore():
+    thickness_dep_file = ""
+    curve_fitting_file = ""
 
-    short_description = 'Kittel & linewidth fitting for a single sample'
-    long_description = 'Calculate Kittel & linewidth fitting and outputs effective magnetization, damping coefficient, and W0.'
+    def __init__(self):
+        base = os.path.dirname(os.path.abspath(__file__))
+        name = os.path.normpath(os.path.join(
+            base, '../setting/settings.json'))
+        self.thickness_dep_file = pd.read_json(
+            name).at["thickness_dep_file", "file_name"]
+        self.curve_fitting_file = pd.read_json(
+            name).at["curve_fitting_file", "file_name"]
 
-    def build_option(self, parser):
-        """
-        引数の追加．
-        """
-#        parser.add_argument('output', type=Path,
-#                            help="Directory to save the result data")
-        parser.add_argument('theta', type=float,
-                            help="Angle (deg) of the applied magnetic field (in-plane)")
-        parser.add_argument('df', type=float,
-                            help="Thickness (nm) of the ferromagnet")
-        parser.add_argument('dn', type=float,
-                            help="Thickness (nm) of the nonmagnet")
-        # 追加した後にparserを返す
-        return parser
-
-    def run(self, args):
-        df = pd.read_csv(str(args.dir) + "/" +
-                         curve_fitting_file)
+    def fitting(self, dir, theta, df, dn):
+        df = pd.read_csv(str(dir) + "/" +
+                         self.curve_fitting_file)
         df = df.set_index(["range_type"], drop=True)
         df_result = pd.DataFrame(index=[],
                                  columns=['range_type', 'M_eff', 'damping', 'W0', 'theta', 'df', 'dn'])
@@ -86,8 +74,14 @@ class KittelLineFitting(Command):
             alpha = (para_opt_line[0] * gamma_GHZ)/1000
 
             df_result = df_result.append(
-                {"range_type": range_type, "M_eff": para_opt_kittel[0], 'damping': alpha, 'W0': para_opt_line[1], 'theta': args.theta, 'df': args.df, 'dn': args.dn}, ignore_index=True)
-        df_result.to_csv(str(args.dir) + "/" +
-                         thickness_dep_file, index=False)
+                {"range_type": range_type, "M_eff": para_opt_kittel[0], 'damping': alpha, 'W0': para_opt_line[1], 'theta': theta, 'df': df, 'dn': dn}, ignore_index=True)
+        df_result.to_csv(str(dir) + "/" +
+                         self.thickness_dep_file, index=False)
         print(df_result)
-        return ExitStatus.SUCCESS
+        return 0
+
+
+if __name__ == "__main__":
+    kittelline_fitting = KittelLineFittingCore()
+    kittelline_fitting.fitting(
+        sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

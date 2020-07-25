@@ -1,30 +1,31 @@
 import glob
+import os
+import sys
 
 import scipy.optimize as sopt
 import pandas as pd
 import scipy.constants as sconst
-
-from rootcommand import CommonOption, RootCommand
-from uroboros import Command
-from uroboros.constants import ExitStatus
-
-from setting import *
 
 
 def fitfunc_satmag(x, M_s, K_s):
     return M_s + K_s*x/(sconst.mu_0*M_s)
 
 
-class MagnetizationFitting(Command):
-    """Sub command of stfmr"""
-    name = 'satmag'
-    options = [CommonOption()]
+class MagnetizationFittingCore():
+    thickness_dep_file = ""
 
-    short_description = 'Saturation Magnetization fitting for multiple samples'
-    long_description = 'Calculate and output saturation magnetization.'
+    def __init__(self):
+        base = os.path.dirname(os.path.abspath(__file__))
+        name = os.path.normpath(os.path.join(
+            base, '../setting/settings.json'))
+        self.thickness_dep_file = pd.read_json(
+            name).at["thickness_dep_file", "file_name"]
+        self.satmag_result_file = pd.read_json(
+            name).at["satmag_result_file", "file_name"]
+        pass
 
-    def run(self, args):
-        file_list = glob.glob(str(args.dir) + '/**/' + thickness_dep_file)
+    def fitting(self, dir):
+        file_list = glob.glob(str(dir) + '/**/' + self.thickness_dep_file)
         df_list = []
         for files in file_list:
             df_list.append(pd.read_csv(files))
@@ -50,7 +51,12 @@ class MagnetizationFitting(Command):
             # xi_FMR
             file_list = glob.glob('temp/*.txt')
 
-        df_result.to_csv(str(args.dir) + "/" +
-                         satmag_result_file, index=False)
+        df_result.to_csv(str(dir) + "/" +
+                         self.satmag_result_file, index=False)
 
-        return ExitStatus.SUCCESS
+        return 0
+
+
+if __name__ == "__main__":
+    magnetization_fitting = MagnetizationFittingCore()
+    magnetization_fitting.fitting(sys.argv[1])

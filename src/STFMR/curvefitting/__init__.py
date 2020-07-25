@@ -1,1 +1,1 @@
-from .core import CurveFitting, CurvePlotting
+from .command import CurveFitting, CurvePlotting
