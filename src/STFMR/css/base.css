@@ -1,0 +1,27 @@
+@charset "UTF-8";
+body {
+  background: #d1d8e5;
+  color: #536A97;
+  -webkit-app-region: drag;
+  /* ドラッグ可能に */
+  -webkit-user-select: none;
+  /* ドラッグはテキスト選択と競合するので禁止 */
+}
+
+.inline_box {
+  width: 100%;
+  height: 40vh;
+  overflow: scroll;
+  background: #b0bcd3;
+  border: 1px solid #f1f4f8;
+  padding: 10px;
+}
+
+.input_box {
+  width: 3em;
+}
+
+.input_box input:focus {
+  border: solid 1px orange;
+}
+/*# sourceMappingURL=base.css.map */

@@ -131,7 +131,7 @@ class CurveFittingCore():
             for index, row in df_val.iterrows():
                 h = reprod_range[range_type]
                 fre = row.to_list()[0]
-                para = row.to_list()[1:]
+                para = row.to_list()[1:7]
                 v = list(map(lambda x: fitfunc_curve(x, *para), h))
                 plt.plot(h, v, linewidth=2.0)
         plt.xticks(fontsize=Fontsize)
@@ -146,4 +146,4 @@ class CurveFittingCore():
 
 if __name__ == "__main__":
     curve_fitting = CurveFittingCore()
-    curve_fitting.run(sys.argv[1])
+    curve_fitting.fitting(sys.argv[1])

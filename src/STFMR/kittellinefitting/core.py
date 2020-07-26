@@ -41,12 +41,12 @@ class KittelLineFittingCore():
         base = os.path.dirname(os.path.abspath(__file__))
         name = os.path.normpath(os.path.join(
             base, '../setting/settings.json'))
-        self.thickness_dep_file = pd.read_json(
-            name).at["thickness_dep_file", "file_name"]
         self.curve_fitting_file = pd.read_json(
             name).at["curve_fitting_file", "file_name"]
+        self.thickness_dep_file = pd.read_json(
+            name).at["thickness_dep_file", "file_name"]
 
-    def fitting(self, dir, theta, df, dn):
+    def fitting(self, dir, theta, d_f, d_n):
         df = pd.read_csv(str(dir) + "/" +
                          self.curve_fitting_file)
         df = df.set_index(["range_type"], drop=True)
@@ -56,9 +56,13 @@ class KittelLineFittingCore():
         for range_type, init_M in [["negative", -0.500], ["positive", 0.500]]:
            # load csv
             df_val = df.loc[(range_type)]
-            h_res = df_val["h_res"].values.tolist()
-            freq = df_val["frequency"].values.tolist()
-            lw = df_val["linewidth"].values.tolist()
+            h_res = df_val["h_res"].tolist()
+            freq = df_val["frequency"].tolist()
+            lw = df_val["linewidth"].tolist()
+
+            print(h_res)
+            print(freq)
+            print(lw)
 
             # Kittel fitting
             para_ini_kittel = [init_M]
@@ -74,10 +78,10 @@ class KittelLineFittingCore():
             alpha = (para_opt_line[0] * gamma_GHZ)/1000
 
             df_result = df_result.append(
-                {"range_type": range_type, "M_eff": para_opt_kittel[0], 'damping': alpha, 'W0': para_opt_line[1], 'theta': theta, 'df': df, 'dn': dn}, ignore_index=True)
-        df_result.to_csv(str(dir) + "/" +
-                         self.thickness_dep_file, index=False)
+                {"range_type": range_type, "M_eff": para_opt_kittel[0], 'damping': alpha, 'W0': para_opt_line[1], 'theta': theta, 'df': d_f, 'dn': d_n}, ignore_index=True)
         print(df_result)
+        df_result.to_csv(str(dir) + "/" +
+                         self.thickness_dep_file)
         return 0
 
 
