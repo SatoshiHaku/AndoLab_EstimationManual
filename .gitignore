@@ -1,0 +1,9 @@
+# LaTeX
+*.aux
+*.fls
+*.fdb_latexmk
+*.log
+*.toc
+*.gz
+*.dvi
+*.texpadtmp
