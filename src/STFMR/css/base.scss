@@ -2,8 +2,6 @@
 body {
 	background: $bg-color;
 	color: $base-color;
-	-webkit-app-region: drag; /* ドラッグ可能に */
-	-webkit-user-select: none; /* ドラッグはテキスト選択と競合するので禁止 */
 }
 
 .inline_box {
@@ -20,4 +18,10 @@ body {
 	input:focus{
 		border:solid 1px $edge-color;
 	}
+}
+.box{
+	width: 25em;
+	height: 20em;
+	overflow: scroll;
+	border: solid 3px darken($color: $bg-color, $amount: 20%);
 }

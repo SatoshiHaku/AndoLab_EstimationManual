@@ -1,11 +1,6 @@
-@charset "UTF-8";
 body {
   background: #d1d8e5;
   color: #536A97;
-  -webkit-app-region: drag;
-  /* ドラッグ可能に */
-  -webkit-user-select: none;
-  /* ドラッグはテキスト選択と競合するので禁止 */
 }
 
 .inline_box {
@@ -23,5 +18,12 @@ body {
 
 .input_box input:focus {
   border: solid 1px orange;
+}
+
+.box {
+  width: 25em;
+  height: 20em;
+  overflow: scroll;
+  border: solid 3px #8fa0c1;
 }
 /*# sourceMappingURL=base.css.map */

@@ -45,11 +45,77 @@ function sendToPyKittelLineFit(dir, theta, df, dn) {
 	})
 }
 
+function sendToPySatMagFit(dir) {
+	return new Promise((resolve, reject) => {
+		let python = spawn('python', [`${__dirname}/../stfmr.py`, "satmag", dir]);
+		python.stdout.on('data', function (data) {
+			console.log("Python response: ", data.toString('utf8'));
+		});
+
+		python.stderr.on('data', (data) => {
+			console.error(`stderr: ${data}`);
+		});
+
+		python.on('close', (code) => {
+			console.log(`child process exited with code ${code}`);
+			if (code == 0) {
+				resolve();
+			} else {
+				reject();
+			}
+		});
+	})
+}
+
+function sendToPyXiFMR(dir) {
+	return new Promise((resolve, reject) => {
+		let python = spawn('python', [`${__dirname}/../stfmr.py`, "xifmr", dir]);
+		python.stdout.on('data', function (data) {
+			console.log("Python response: ", data.toString('utf8'));
+		});
+
+		python.stderr.on('data', (data) => {
+			console.error(`stderr: ${data}`);
+		});
+
+		python.on('close', (code) => {
+			console.log(`child process exited with code ${code}`);
+			if (code == 0) {
+				resolve();
+			} else {
+				reject();
+			}
+		});
+	})
+}
+
+
+function sendToPyXiFlDl(dir) {
+	return new Promise((resolve, reject) => {
+		let python = spawn('python', [`${__dirname}/../stfmr.py`, "xifldl", dir]);
+		python.stdout.on('data', function (data) {
+			console.log("Python response: ", data.toString('utf8'));
+		});
+
+		python.stderr.on('data', (data) => {
+			console.error(`stderr: ${data}`);
+		});
+
+		python.on('close', (code) => {
+			console.log(`child process exited with code ${code}`);
+			if (code == 0) {
+				resolve();
+			} else {
+				reject();
+			}
+		});
+	})
+}
 
 function Button2OpenFolder() {
 	ipcRenderer.send('render2main_open_dir')
 }
-
+let targetDirPath = ""
 function Button2TriggerFitCurve() {
 
 	// curve fitting preparation
@@ -80,14 +146,22 @@ function Button2TriggerFitCurve() {
 		Promise.all(kittelParaList.map((para) => {
 			return sendToPyKittelLineFit(para[0], theta, para[1], para[2]);
 		}));
+	}).then(() => {
+		return sendToPySatMagFit(targetDirPath)
+	}).then(() => {
+		return sendToPyXiFMR(targetDirPath)
+	}).then(() => {
+		return sendToPyXiFlDl(targetDirPath)
 	}).catch();
 }
 
 const fs = require('fs')
-ipcRenderer.on('open_dir', (event, arg) => {
+ipcRenderer.on('open_dir', (event, arg) => { OpenDir(arg[0]) });
+
+function OpenDir(arg) {
 	data.innerHTML = ""
 	data.insertAdjacentHTML('beforeend', `<a href="javascript:Button2TriggerFitCurve();">Fit Curve...</a>`)
-	let path = String(arg[0])
+	let path = String(arg)
 	console.log(path);
 	const allDirents = fs.readdirSync(path, { withFileTypes: true });
 	const dirNames = allDirents.filter(dirent => dirent.isDirectory()).map(({ name }) => name);
@@ -167,6 +241,25 @@ ipcRenderer.on('open_dir', (event, arg) => {
 		table.appendChild(tr);
 	}
 	document.getElementById('data').appendChild(table);
-});
+}
 
+var holder = document.getElementById('holder');
+/** hoverエリアにドラッグされた場合 */
+holder.ondragover = function () {
+	return false;
+};
+/** hoverエリアから外れた or ドラッグが終了した */
+holder.ondragleave = holder.ondragend = function () {
+	return false;
+};
+/** hoverエリアにドロップされた */
+holder.ondrop = function (e) {
+	e.preventDefault(); // イベントの伝搬を止めて、アプリケーションのHTMLとファイルが差し替わらないようにする
 
+	var file = e.dataTransfer.files[0];
+	if (!file.type && file.size % 4096 == 0) {//is folder
+		OpenDir(file.path);
+		targetDirPath = file.path
+	}
+	return false;
+};
