@@ -15,6 +15,7 @@ class CurveFitting(Command):
 
     def run(self, args):
         self.curve_fitting.fitting(args.dir)
+        self.curve_fitting.plot(args.dir)
         return ExitStatus.SUCCESS
 
 
