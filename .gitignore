@@ -1,9 +1,12 @@
 # LaTeX 
 *.aux
+*.dvi
 *.fls
 *.fdb_latexmk
 *.log
 *.toc
+*.ps
+*.pdf
 
 # Mac OS
 *.DS_Store
