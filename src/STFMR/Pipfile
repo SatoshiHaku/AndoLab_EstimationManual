@@ -11,6 +11,7 @@ uroboros = "*"
 scipy = "*"
 matplotlib = "*"
 pandas = "*"
+uncertainties = "*"
 
 [requires]
 python_version = "3.8"
