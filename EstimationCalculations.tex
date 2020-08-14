@@ -1,13 +1,25 @@
-\documentclass[11pt]{jbook}
+\documentclass[12pt]{jsbook}
 %\documentclass{jaeticle}
 \bibliographystyle{unsrt}
-\usepackage{color}
+\usepackage{amsmath,amssymb}
 
 
 \begin{document}
 \chapter{ST-FMR測定における各物理量の計算式のまとめ}
+スピントルク強磁性共鳴法(ST-FMR)を用いたスピン軌道トルク(SOT)生成効率の定量方法を簡単に述べていく。解析方法の種類は主に三つに分けられる。ここでは、ST-FMR信号が以下のようなローレンツ関数で表現されること既知とする。
+\begin{align}
+	V_{mix}=V_{asy}\frac{W(\mu_0H-\mu_0H_{FMR})}{(\mu_0H-\mu_0H_{FMR})^2+W^2}+V_{sym}\frac{W^2}{(\mu_0H-\mu_0H_{FMR})^2+W^2}
+\end{align}
+一つ目はFLトルクが無視できるときは、
+\begin{align}
+	\theta_{\rm{SH}}^{\rm{eff}}=\xi_{\rm{DL}}=\frac{V_{sym}}{V_{asy}}\frac{e\mu_0M_st_{FM}t_{NM}}{\hbar}\sqrt{1+\frac{M_{eff}}{H_{FMR}}}
+\end{align}
+と、DLトルク効率を定量することができる。しかし、FLが無視できない時は、強磁性体膜厚が異なる複数サンプルもしくは単一サンプルから定量する方法がある。まず、単一サンプルから求める方法を説明する。
 \section{A single sample}
-
+単一サンプルからDLトルク効率を求める方法は主に二つあげられる。一つ目はST-FMR信号の$S$成分から直接計算する方法がある。これは、試料に流れている電流$I_{RF}$,試料のAMR変化量$\Delta R$, 飽和磁化$M_s$が別途見積もる必要がある。もう一つは、緩和変調(DM)を利用した定量方法がある。
+\subsection{current calibration method}
+試料を流れる電流はジュールヒーティングを利用した方法と、ベクトルネットワークアナライザを利用して、試料から反射するマイクロ波電流から算出する方法が挙げられる。これらを用いることで資料に流れるマイクロ波電流$I_{RF}$を見積もれる。\\
+それでは、どのように$S$成分からDLトルク効率を算出する方法を述べていく。
 damping-like torqueとfield-like torqueの有効磁場を$H_{L} \propto \xi_{\mathrm{DL}} J_{e}(\hat{\sigma} \times \hat{m})$と$H_{T} \propto\xi_{\mathrm{FL}} J_{e} \hat{\sigma}$のように定義すると
 \begin{eqnarray}
 \xi_{\mathrm{DL}(\mathrm{FL})}(T)=\left(\frac{2 e}{\hbar}\right) 4 \pi M_{s}(T) t_{\mathrm{FM}}^{\mathrm{eff}}\left(\frac{H_{L(T)}}{J_{e}}\right)
@@ -58,9 +70,12 @@ H_{2}&=&H_{\mathrm{rot}}+H_{\mathrm{exch}} \cos \left(\theta-\theta_{\mathrm{exc
 A_{\mathrm{sym}}=\frac{\gamma\left(H_{\mathrm{res}}+M_\mathrm{eff}\right)H_{\mathrm{res}}}{\omega \Delta H\left(2 H_{\mathrm{res}}+M_\mathrm{eff}\right)} \\
 A_{\mathrm{asy}}=\frac{\left(H_{\mathrm{res}}+M_\mathrm{eff}\right)}{\mu_{0} \Delta H\left(2 H_{\mathrm{res}}+M_\mathrm{eff}\right)}
 \end{eqnarray}
-と簡単になり，これを使えばいい．．
-
-
+と簡単になり，これを使えばいい. これから、$V_{sym}$から$\Delta R, I, M_s$がわかれば、$H_{DL}$が逆算することができるため、$\xi_{DL}$が算出できる。
+\subsection{緩和変調(DM)}
+緩和変調法とは、ST-FMRを測定している際に、外部からDC電流を流しながら測定する際に、SOTによって、電流の極性によってトルクの向きが反転するために、ST-FMRスペクトルの線幅が変化する。この線幅の変化率から$\xi_{DL}$を見積流ことができる。試料に流れる電流は外部から制御できるが、SOT生成源に流れる電流量を見積もるため、$\rho_{NM(FM)}$が必要となる。線幅の変化率と$\xi_{DL}$は次のような関係がある。また$M_s$も見積もる必要がある\footnote{ $\displaystyle M_{eff}=M_s-\frac{2K_s}{\mu_0M_st_{FM}}$の関係があり、$K_s\ll 1$であれば、$M_{eff}\approx M_s$と近似すれば、$M_s$を別途求める必要はない。}。
+\begin{align}
+	\frac{\partial\left(\mu_{0}  W\right)}{\partial\left(j_{\mathrm{NM}}\right)}=\xi_{\mathrm{DL}} \frac{\omega}{\gamma} \frac{\hbar}{2 e} \frac{\sin \theta}{\left(H_{\mathrm{FMR}}+M_{\mathrm{eff}} / 2\right) \mu_{0} M_{s} t_{\mathrm{FM}}}
+\end{align}
 
 
 \section{Multipul samples}
@@ -173,11 +188,7 @@ g_{\mathrm{eff}}^{\uparrow \downarrow} &=G^{\uparrow \downarrow}\left[1-(1-\delt
 	l_\mathrm{mf} = v_\mathrm{F}\times2\tau
 \end{eqnarray}
 となる．
-
-
-\textcolor{red}{追加した文章}
-
-
+\chapter{高調波測定(Harmonic measurement)によるSOTの定量}
 \bibliography{ref.bib}
 
 \end{document}
