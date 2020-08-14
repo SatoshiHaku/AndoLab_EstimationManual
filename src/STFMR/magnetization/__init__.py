@@ -1,1 +1,1 @@
-from .core import MagnetizationFitting
+from .command import MagnetizationFitting

@@ -1,0 +1,17 @@
+{
+	"name": "ST-FMR_interface",
+	"version": "1.0.0",
+	"main": "main.js",
+	"dependencies": {},
+	"devDependencies": {
+		"electron": "^9.1.1"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "pipenv run electron ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": ""
+}

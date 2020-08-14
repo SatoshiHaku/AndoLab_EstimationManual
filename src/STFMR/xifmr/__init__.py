@@ -1,1 +1,1 @@
-from .core import XiFMRFitting
+from .command import XiFMRFitting

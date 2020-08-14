@@ -1,0 +1,27 @@
+@import "_variables.scss";
+body {
+	background: $bg-color;
+	color: $base-color;
+}
+
+.inline_box {
+	width: 100%;
+	height: 40vh;
+	overflow: scroll;
+	background: darken($bg-color, 10%);
+	border: 1px solid lighten($bg-color, 10%);
+	padding: 10px;
+}
+
+.input_box{
+	width: 3em;
+	input:focus{
+		border:solid 1px $edge-color;
+	}
+}
+.box{
+	width: 25em;
+	height: 20em;
+	overflow: scroll;
+	border: solid 3px darken($color: $bg-color, $amount: 20%);
+}
