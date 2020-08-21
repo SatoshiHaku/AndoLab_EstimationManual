@@ -91,7 +91,8 @@ class KittelLineFittingCore():
             plt.xlabel('H_res (T)', fontsize=Fontsize)
             plt.ylabel('frequency (GHz)', fontsize=Fontsize)
             plt.legend()
-            plt.savefig(str(dir)+'/kittel_fitting_'+range_type+'.png')
+            plt.savefig(str(dir)+'/kittel_fitting_' +
+                        range_type+'.png', bbox_inches="tight")
 
             # linewidth fitting
             para_ini_line = [2, 0.1]
@@ -121,7 +122,8 @@ class KittelLineFittingCore():
             plt.xlabel('frequency (GHz)', fontsize=Fontsize)
             plt.ylabel('linewidth (mT)', fontsize=Fontsize)
             plt.legend()
-            plt.savefig(str(dir)+'/line_fitting_'+range_type+'.png')
+            plt.savefig(str(dir)+'/line_fitting_' +
+                        range_type+'.png', bbox_inches="tight")
 
             df_result = df_result.append(
                 {'range_type': range_type, 'val_type': 'val', 'M_eff': para_kittel_ndarr[0], 'damping': alpha, 'W0': para_line_ndarr[1], 'theta': theta, 'df': d_f, 'dn': d_n}, ignore_index=True)

@@ -133,7 +133,7 @@ class XiFMRFittingCore():
         plt.ylabel('Xi_FMR', fontsize=Fontsize)
         plt.legend()
         plt.savefig(str(dir) +
-                    '/XiFMR.png')
+                    '/XiFMR.png', bbox_inches="tight")
 
 
 if __name__ == '__main__':

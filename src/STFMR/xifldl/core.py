@@ -137,7 +137,7 @@ class XiFLDLFittingCore():
         plt.xlabel('1/df*dn (m^-2)', fontsize=self.Fontsize)
         plt.ylabel('xi FMR^-1', fontsize=self.Fontsize)
         plt.savefig(str(dir) +
-                    '/xi_FMR_result.png')
+                    '/xi_FMR_result.png', bbox_inches="tight")
 
 
 if __name__ == '__main__':

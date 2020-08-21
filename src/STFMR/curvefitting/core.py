@@ -115,7 +115,7 @@ class CurveFittingCore():
         plt.xlabel('magnetic field (mT)', fontsize=Fontsize)
         plt.ylabel('voltage (V)', fontsize=Fontsize)
         plt.legend()
-        plt.savefig(str(dir)+'/raw_data_plot.png')
+        plt.savefig(str(dir)+'/raw_data_plot.png', bbox_inches="tight")
         result_df.to_csv(foldername + '/' +
                          self.curve_fitting_file, index=False)
         return 0
@@ -152,7 +152,7 @@ class CurveFittingCore():
             plt.ylabel('voltage (V)', fontsize=Fontsize)
             plt.legend()
             plt.savefig(str(dir) +
-                        '/fitting_result_' + range_type + '.png')
+                        '/fitting_result_' + range_type + '.png', bbox_inches="tight")
 
     def plot_ratio_sym_to_asym(self, dir):
         df = pd.read_csv(str(dir) + '/' +
@@ -188,7 +188,7 @@ class CurveFittingCore():
         plt.ylabel('Ratio', fontsize=Fontsize)
         plt.legend()
         plt.savefig(str(dir) +
-                    '/ratio_of_S_to_A.png')
+                    '/ratio_of_S_to_A.png', bbox_inches="tight")
 
 
 if __name__ == '__main__':
